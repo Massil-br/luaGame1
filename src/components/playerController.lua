@@ -24,16 +24,16 @@ end
 ---@param dt  number
 function PlayerController:update(dt)
     if love.keyboard.isDown("z") then
-        self.transform.y = self.transform.y - self.speed
+        self.transform.y = self.transform.y - self.speed*dt
     end
     if love.keyboard.isDown("s") then
-        self.transform.y = self.transform.y + self.speed
+        self.transform.y = self.transform.y + self.speed*dt
     end
     if love.keyboard.isDown("q") then
-        self.transform.x = self.transform.x - self.speed
+        self.transform.x = self.transform.x - self.speed*dt
     end
     if love.keyboard.isDown("d") then
-        self.transform.x = self.transform.x + self.speed
+        self.transform.x = self.transform.x + self.speed*dt
     end
 end
 return PlayerController

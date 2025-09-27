@@ -3,11 +3,6 @@ local LoadManager = require("src.core.loadManager")
 local Scene = require("src.core.scene")
 
 
-local f = io.open("log.txt","w")
-if f then
-    io.output(f)
-    print("hello")
-end
 
 
 local sceneManager = SceneManager.new()
@@ -16,8 +11,6 @@ local scene = Scene.new("base")
 sceneManager:addScene(scene)
 function love.load()
     loadManager:loadFolder("src/init")
-    print(loadManager.toLoad[1])
-    print(type(loadManager.toLoad[1].Load))
     loadManager:loadScenes(sceneManager)
     sceneManager:setScene("base")
     loadManager:Load(sceneManager)

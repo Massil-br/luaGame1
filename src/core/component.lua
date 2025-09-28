@@ -1,9 +1,9 @@
 
 ---@class Component
 ---@field id number
----@field parent Entity|nil
+---@field parent GameObject|nil
 ---@field isUnique boolean
----@field new fun(parent:Entity|nil):Component
+---@field new fun(parent:GameObject|nil):Component
 ---@field transform Transform
 ---@field start fun(self:Component)
 ---@field init fun(self:Component)
@@ -15,6 +15,9 @@ local Component = {}
 Component.__index = Component
 Component.__class = "Component"
 Component.isUnique = true
+
+-- Import explicite pour l'IntelliSense
+local GameObject = require("src.core.gameObject")
 
 local componentId =0
 

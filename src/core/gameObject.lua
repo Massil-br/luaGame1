@@ -1,20 +1,20 @@
----@class Entity
+---@class GameObject
 ---@field id number
 ---@field components table<string,Component|Component[]>
 ---@field name string
----@field parent Entity|Scene|nil
----@field children Entity[]
+---@field parent GameObject|Scene|nil
+---@field children GameObject[]
 ---@field transform Transform
----@field new fun(parent?,name?):Entity
-local Entity ={}
-Entity.__index = Entity
+---@field new fun(parent?,name?):GameObject
+local GameObject ={}
+GameObject.__index = GameObject
 
-local entityId = 0
+local gameObjectId = 0
 
-function Entity.new(name,parent)
-    entityId = entityId+1
-    local self = setmetatable({},Entity)
-    self.id = entityId
+function GameObject.new(name,parent)
+    gameObjectId = gameObjectId+1
+    local self = setmetatable({},GameObject)
+    self.id = gameObjectId
     self.name = name or tostring(self.id)
     self.components = {}
     self.parent = parent
@@ -28,7 +28,7 @@ function Entity.new(name,parent)
 end
 
 ---@param component Component
-function Entity:addComponent(component)
+function GameObject:addComponent(component)
     if not component or not component.__class then
         error("Cannot add component without __class")
     end
@@ -38,7 +38,7 @@ function Entity:addComponent(component)
     
     if component.isUnique then
         if self.components[className] then
-            error("Entity has already a unique component of type ".. className)
+            error("GameObject has already a unique component of type ".. className)
         end
         self.components[className] = component
         component:start()
@@ -54,7 +54,7 @@ end
 
 ---@param className string
 ---@return Component|nil
-function Entity:getComponent(className)
+function GameObject:getComponent(className)
     local comp = self.components[className]
     if not comp then return nil end
 
@@ -67,7 +67,7 @@ end
 
 ---@param className string
 ---@return Component[]|nil
-function Entity:getComponents(className)
+function GameObject:getComponents(className)
     local comp = self.components[className]
     if not comp then return nil end
     local list = {}
@@ -80,12 +80,12 @@ end
 
 ---@param className string
 ---@return boolean
-function Entity:hasComponent(className)
+function GameObject:hasComponent(className)
     return self.components[className]~=nil
 end
 
 ---@param dt number
-function Entity:updateComponents(dt)
+function GameObject:updateComponents(dt)
     for _,comps in pairs(self.components) do
         if type(comps) == "table" and not comps.isUnique then
             for _,c in pairs(comps)do
@@ -97,7 +97,7 @@ function Entity:updateComponents(dt)
     end
 end
 
-function Entity:drawComponents()
+function GameObject:drawComponents()
     for _,comps in pairs(self.components) do
         if type(comps) == "table" and not comps.isUnique then
             for _,c in pairs(comps)do
@@ -109,17 +109,18 @@ function Entity:drawComponents()
     end
 end
 
----@param parent Entity|Scene
-function Entity:setParent(parent)
+---@param parent GameObject|Scene
+function GameObject:setParent(parent)
     self.parent = parent
 end
 
----@param entity Entity
-function Entity:addChild(entity)
-    entity:setParent(self)
-    table.insert(self.children,entity)
+---@param gameObject GameObject
+function GameObject:addChild(gameObject)
+    gameObject:setParent(self)
+    table.insert(self.children,gameObject)
 end
 
 
 
-return Entity
+return GameObject
+

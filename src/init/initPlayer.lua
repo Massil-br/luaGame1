@@ -1,12 +1,12 @@
-local Entity = require("src.core.entity")
+local GameObject = require("src.core.gameObject")
 
 local M = {}
 
 ---@param SceneManager SceneManager
 function M:Load(SceneManager)
     local scene =SceneManager:getFirstScene()
-    local player = Entity.new( "player",scene)
-    scene:addEntity(player)
+    local player = GameObject.new( "player",scene)
+    scene:addGameObject(player)
 
     local PlayerController = require("src.components.playerController").new(500)
     player:addComponent(PlayerController)
@@ -17,10 +17,12 @@ function M:Load(SceneManager)
 
     player:addChild(camera)
 
-    local object = Entity.new("object1",scene)
-    scene:addEntity(object)
+    local object = GameObject.new("object1",scene)
+    scene:addGameObject(object)
     CircleRenderer1 = require("src.components.circleRenderer").new(1500, 0, 50, 50)
     object:addComponent(CircleRenderer1)
+
+
 end
 
 return M

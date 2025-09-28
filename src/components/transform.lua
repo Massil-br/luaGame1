@@ -2,6 +2,7 @@ local Component = require("src.core.component")
 ---@class Transform : Component
 ---@field x number
 ---@field y number
+---@field z number
 ---@field rotation number
 ---@field scaleX number
 ---@field scaleY number
@@ -22,6 +23,7 @@ function Transform.new(x,y,scaleX,scaleY)
     local self = setmetatable(Component.new(),Transform)
     self.x = x or 0
     self.y = y or 0
+    self.z = 0
     self.scaleX = scaleX or 1
     self.scaleY = scaleY or 1
     self.rotation = 0

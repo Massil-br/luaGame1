@@ -5,7 +5,7 @@
 ---@field parent GameObject|Scene|nil
 ---@field children GameObject[]
 ---@field transform Transform
----@field new fun(parent?,name?):GameObject
+---@field new fun(name?,parent?):GameObject
 local GameObject ={}
 GameObject.__index = GameObject
 

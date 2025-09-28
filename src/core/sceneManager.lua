@@ -32,12 +32,14 @@ end
 function SceneManager:update(dt)
     if self.current then
         self.current:update(dt)
+        self.current:updateUi(dt)
     end
 end
 
 function SceneManager:draw()
     if self.current then
         self.current:draw()
+        self.current:drawUi()
     end
 end
 

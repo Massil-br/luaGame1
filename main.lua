@@ -22,5 +22,5 @@ end
 function love.draw()
     sceneManager:draw()
     -- Le texte sera maintenant positionné dans le système de coordonnées de la caméra
-    love.graphics.print("hello", 0, 0)
+    --love.graphics.print("hello", 0, 0)
 end

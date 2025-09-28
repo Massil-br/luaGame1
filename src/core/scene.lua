@@ -71,7 +71,10 @@ function Scene:draw()
         end)
 
         for _,gameObject in ipairs(self.gameObjects) do
-            self:drawEntityRecursive(gameObject)
+            -- Frustum culling : ne dessiner que les objets visibles
+            if self:isVisible(gameObject, camera) then
+                self:drawEntityRecursive(gameObject)
+            end
         end
         camera:detach()
     end
@@ -126,6 +129,43 @@ function Scene:findEntityRecursive(gameObject, name)
         end
     end
     return nil
+end
+
+---@param gameObject GameObject
+---@param camera Camera
+---@return boolean
+function Scene:isVisible(gameObject, camera)
+    -- Ne pas culler la caméra elle-même
+    if gameObject.name == "Main Camera" then
+        return false
+    end
+    
+    -- Obtenir la position de l'objet
+    local objX, objY = gameObject.transform.x, gameObject.transform.y
+    
+    -- Obtenir la position de la caméra (joueur)
+    local camX, camY = 0, 0
+    if self.camera and self.camera.parent then
+        -- La caméra est enfant du joueur, donc self.camera.parent est le joueur
+        local player = self.camera.parent
+        if player and player.transform then
+            camX, camY = player.transform.x or 0, player.transform.y or 0
+        end
+    end
+    
+    -- Obtenir les dimensions de l'écran
+    local screenW, screenH = love.graphics.getDimensions()
+    
+    -- Calculer la zone visible avec marge (pour éviter le pop-in)
+    local margin = 100 -- marge en pixels
+    local visibleLeft = camX - (screenW / 2) - margin
+    local visibleRight = camX + (screenW / 2) + margin
+    local visibleTop = camY - (screenH / 2) - margin
+    local visibleBottom = camY + (screenH / 2) + margin
+    
+    -- Vérifier si l'objet est dans la zone visible
+    return objX >= visibleLeft and objX <= visibleRight and
+           objY >= visibleTop and objY <= visibleBottom
 end
 
 ---@param dt  number

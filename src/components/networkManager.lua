@@ -10,7 +10,7 @@ NetworkManager.__class = "NetworkManager"
 NetworkManager.isUnique = true
 
 function NetworkManager.new(api)
-    local self = setmetatable({}, NetworkManager)
+    local self = setmetatable({Component.new()}, NetworkManager)
     self.api = api
     self.queue = {}
     self.co = coroutine.create(function()

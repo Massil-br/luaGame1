@@ -1,3 +1,5 @@
+local Colors = require("src.core.color")
+
 local Component = require("src.core.component")
 ---@class CircleRenderer:Component
 ---@field color nil|string
@@ -18,7 +20,7 @@ CircleRenderer.isUnique = true
 ---@param sizeY number?
 function CircleRenderer.new(offsetX,offsetY,sizeX,sizeY)
     local self = setmetatable(Component.new(),CircleRenderer)
-    self.color = nil
+    self.color = Colors.white
     self.offsetX = offsetX or 0
     self.offsetY = offsetY or 0
     self.sizeX = sizeX or 100
@@ -38,8 +40,10 @@ function CircleRenderer:update(dt)
 end
 
 function CircleRenderer:draw()
+    love.graphics.setColor(self.color)
     -- Dessiner à la position du transform (la caméra transforme automatiquement)
     love.graphics.circle("fill", self.transform.x + self.offsetX, self.transform.y + self.offsetY, self.sizeX, self.sizeY)
+    love.graphics.setColor(Colors.white)
 end
 
 

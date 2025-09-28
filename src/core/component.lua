@@ -4,6 +4,7 @@
 ---@field parent Entity|nil
 ---@field isUnique boolean
 ---@field new fun(parent:Entity|nil):Component
+---@field transform Transform
 ---@field start fun(self:Component)
 ---@field init fun(self:Component)
 ---@field update fun(self:Component,dt:number)
@@ -23,12 +24,23 @@ function Component.new(parent)
     local self = setmetatable({},Component)
     self.id = componentId
     self.parent = parent or nil
+    self:setTransform()
     return self
 end
 
 function Component:start()end
 function Component:update(dt)end
 function Component:draw()end
+function Component:setTransform()
+    if self.parent ~=nil then
+        self.transform = self.parent:getComponent("Transform")
+    end
+end
 
+---@param name string
+---@return Component|nil
+function Component:getComponent(name)
+   return  self.parent:getComponent(name)
+end
 
 return Component

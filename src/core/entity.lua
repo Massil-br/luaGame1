@@ -6,18 +6,12 @@
 ---@field children Entity[]
 ---@field transform Transform
 ---@field new fun(parent?,name?):Entity
----@field addComponent fun(Entity,Transform)
----@field getComponent fun(Entity,string):Component|nil
----@field getComponents fun(Entity,string):Component[]|nil
----@field hasComponent fun(Entity,string):boolean
----@field updateComponents fun(Entity,dt:number)
----@field drawComponents fun(Entity)
 local Entity ={}
 Entity.__index = Entity
 
 local entityId = 0
 
-function Entity.new(parent,name)
+function Entity.new(name,parent)
     entityId = entityId+1
     local self = setmetatable({},Entity)
     self.id = entityId
@@ -33,7 +27,7 @@ function Entity.new(parent,name)
     return self
 end
 
-
+---@param component Component
 function Entity:addComponent(component)
     if not component or not component.__class then
         error("Cannot add component without __class")
@@ -58,7 +52,8 @@ function Entity:addComponent(component)
     component:start()
 end
 
-
+---@param className string
+---@return Component|nil
 function Entity:getComponent(className)
     local comp = self.components[className]
     if not comp then return nil end
@@ -70,6 +65,8 @@ function Entity:getComponent(className)
     return comp[1]
 end
 
+---@param className string
+---@return Component[]|nil
 function Entity:getComponents(className)
     local comp = self.components[className]
     if not comp then return nil end
@@ -81,10 +78,13 @@ function Entity:getComponents(className)
     return comp
 end
 
+---@param className string
+---@return boolean
 function Entity:hasComponent(className)
     return self.components[className]~=nil
 end
 
+---@param dt number
 function Entity:updateComponents(dt)
     for _,comps in pairs(self.components) do
         if type(comps) == "table" and not comps.isUnique then
@@ -108,6 +108,18 @@ function Entity:drawComponents()
         end
     end
 end
+
+---@param parent Entity|Scene
+function Entity:setParent(parent)
+    self.parent = parent
+end
+
+---@param entity Entity
+function Entity:addChild(entity)
+    entity:setParent(self)
+    table.insert(self.children,entity)
+end
+
 
 
 return Entity

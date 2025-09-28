@@ -6,6 +6,7 @@ local Component = require("src.core.component")
 ---@field sizeX number
 ---@field sizeY number
 ---@field transform Transform
+---@field count number
 local CircleRenderer = setmetatable({},{__index = Component})
 CircleRenderer.__index = CircleRenderer
 CircleRenderer.__class = "CircleRenderer"
@@ -22,15 +23,23 @@ function CircleRenderer.new(offsetX,offsetY,sizeX,sizeY)
     self.offsetY = offsetY or 0
     self.sizeX = sizeX or 100
     self.sizeY = sizeY or 100
+    self.count = 0
+    self:setTransform()
     return self
 end
 
 function CircleRenderer:start()
+    
    self.transform = self.parent.transform
 end
 
+function CircleRenderer:update(dt)
+    
+end
+
 function CircleRenderer:draw()
-    love.graphics.circle("fill",self.transform.x+self.offsetX,self.transform.y+self.offsetY,self.sizeX,self.sizeY)
+    -- Dessiner à la position du transform (la caméra transforme automatiquement)
+    love.graphics.circle("fill", self.transform.x + self.offsetX, self.transform.y + self.offsetY, self.sizeX, self.sizeY)
 end
 
 

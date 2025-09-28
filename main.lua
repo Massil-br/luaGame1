@@ -21,5 +21,6 @@ function love.update(dt)
 end
 function love.draw()
     sceneManager:draw()
-    love.graphics.print("hello",400,300)
+    -- Le texte sera maintenant positionné dans le système de coordonnées de la caméra
+    love.graphics.print("hello", 0, 0)
 end

@@ -12,7 +12,8 @@ PlayerController.isUnique = true
 function PlayerController.new(speed)
     ---@type PlayerController
     local self = setmetatable(Component.new(),PlayerController)
-    self.speed = speed or 5
+    self.speed = speed or 50
+    self:setTransform()
 
     return self
 end

@@ -27,6 +27,7 @@ function SceneManager:getScene(name)
     return self.scenes[name]
 end
 
+
 ---@param dt number
 function SceneManager:update(dt)
     if self.current then

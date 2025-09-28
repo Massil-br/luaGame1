@@ -12,6 +12,11 @@ Transform.__class = "Transform"
 Transform.isUnique = true
 
 
+---@param x number?
+---@param y number?
+---@param scaleX number?
+---@param scaleY number?
+---@return Transform
 function Transform.new(x,y,scaleX,scaleY)
     ---@type Transform
     local self = setmetatable(Component.new(),Transform)
@@ -20,6 +25,7 @@ function Transform.new(x,y,scaleX,scaleY)
     self.scaleX = scaleX or 1
     self.scaleY = scaleY or 1
     self.rotation = 0
+    self:setTransform()
     return self
 end
 

@@ -35,5 +35,18 @@ function TextureManager:getTexture(path,name)
     return self:addTexture(path,name)
 end
 
+function TextureManager:dropTexture(path,name)
+    for i,texture in ipairs(self.textures) do
+        if name ~= nil and texture.name == name then
+            table.remove(self.textures,i)
+            return
+        end
+        if path ~= nil and texture.path == path then
+            table.remove(self.textures,i)
+            return
+        end
+    end
+end
+
 local textureManagerInstance = TextureManager.new()
 return textureManagerInstance

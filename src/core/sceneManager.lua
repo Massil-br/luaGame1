@@ -43,6 +43,18 @@ function SceneManager:draw()
     end
 end
 
+function SceneManager:drawWorldOnly()
+    if self.current then
+        self.current:draw()
+    end
+end
+
+function SceneManager:drawUiOnly()
+    if self.current then
+        self.current:drawUi()
+    end
+end
+
 function SceneManager:setFirstScene()
     for _, scene in pairs(self.scenes) do
         self.current = scene

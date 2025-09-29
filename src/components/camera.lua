@@ -1,4 +1,5 @@
 local Component = require("src.core.component")
+local Config = require("src.core.config")
 ---@class Camera:Component
 ---@field zoom number
 ---@field new fun(zoom:number?):Camera
@@ -23,8 +24,9 @@ function Camera:attach()
     ---@type Transform
     local t = self:getComponent("Transform")
     if t then
-        local screenWidth = love.graphics.getWidth()
-        local screenHeight = love.graphics.getHeight()
+        -- Utiliser la résolution virtuelle pour centrer correctement après le letterboxing
+        local screenWidth = Config.VIRTUAL_WIDTH
+        local screenHeight = Config.VIRTUAL_HEIGHT
         
         love.graphics.translate(screenWidth / 2, screenHeight / 2)
         love.graphics.rotate(-t.rotation)

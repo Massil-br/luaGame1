@@ -16,9 +16,6 @@ Component.__index = Component
 Component.__class = "Component"
 Component.isUnique = true
 
--- Import explicite pour l'IntelliSense
-local GameObject = require("src.core.gameObject")
-
 local componentId =0
 
 

@@ -1,3 +1,4 @@
+local Config = require("src.core.config")
 ---@class Scene
 ---@field name string
 ---@field gameObjects GameObject[]
@@ -153,8 +154,8 @@ function Scene:isVisible(gameObject, camera)
         end
     end
     
-    -- Obtenir les dimensions de l'écran
-    local screenW, screenH = love.graphics.getDimensions()
+    -- Utiliser la résolution virtuelle (cohérente avec le viewport)
+    local screenW, screenH = Config.VIRTUAL_WIDTH, Config.VIRTUAL_HEIGHT
     
     -- Calculer la zone visible avec marge (pour éviter le pop-in)
     local margin = 100 -- marge en pixels

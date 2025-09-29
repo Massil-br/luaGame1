@@ -1,5 +1,5 @@
 
-
+---@class Color
 local Colors = {
     red = {1,0,0},
     green = {0,1,0},

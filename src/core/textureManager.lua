@@ -13,27 +13,26 @@ end
 
 ---@param path string
 ---@param name string
----@return Texture
+---@return love.Image
 function TextureManager:addTexture(path,name)
     local texture = Texture.new(path,name)
     table.insert(self.textures,texture)
-    return texture
+    return texture.img
 end
 
 ---@param path string
 ---@param name string
----@return Texture
+---@return love.Image
 function TextureManager:getTexture(path,name)
     for _,texture in ipairs(self.textures) do
-        if texture.name == name then
-            return texture
+        if name ~= nil and texture.name == name then
+            return texture.img
         end
-        if texture.path == path then
-            return texture
+        if path ~= nil and texture.path == path then
+            return texture.img
         end
     end
-    local texture = self:addTexture(path,name)
-    return texture
+    return self:addTexture(path,name)
 end
 
 local textureManagerInstance = TextureManager.new()

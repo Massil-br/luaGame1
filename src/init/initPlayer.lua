@@ -12,8 +12,10 @@ function M:Load(SceneManager)
     local PlayerController = require("src.components.playerController").new(500)
     player:addComponent(PlayerController)
 
-    local CircleRenderer = require("src.components.circleRenderer").new(0, 0, 50, 50)
-    player:addComponent(CircleRenderer)
+    local playerSpriteRenderer = require("src.components.spriteRenderer").new()
+    playerSpriteRenderer:setTexture("assets/ethanisolated.png","tex")
+    player:addComponent(playerSpriteRenderer)
+    
     local camera = require("src.Prefabs.Camera")
 
     player:addChild(camera)

@@ -1,8 +1,9 @@
-
+---@class love.Image: userdata
 ---@class Texture
 ---@field id number
 ---@field name string
 ---@field path string
+---@field img love.Image
 local Texture = {}
 
 Texture.__index = Texture
@@ -18,6 +19,7 @@ function Texture.new(path,name)
     self.id = id
     self.name = name or id
     self.path = path
+    self.img = love.graphics.newImage(self.path)
     return self
 end
 
